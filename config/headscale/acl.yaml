@@ -1,0 +1,31 @@
+{
+  "acls": [
+    {
+      "action": "accept",
+      "src": ["*"],
+      "dst": ["*:*"]
+    }
+  ],
+  "groups": {
+    "group:admins": ["admin@tailnet.work"],
+    "group:employees": ["*@tailnet.work"]
+  },
+  "tagOwners": {
+    "tag:server": ["group:admins"],
+    "tag:client": ["group:employees"]
+  },
+  "autoApprovers": {
+    "routes": {
+      "10.0.0.0/8": ["tag:server"],
+      "192.168.0.0/16": ["tag:server"]
+    }
+  },
+  "ssh": [
+    {
+      "action": "accept",
+      "src": ["group:admins"],
+      "dst": ["tag:server"],
+      "users": ["root", "ubuntu"]
+    }
+  ]
+}

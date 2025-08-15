@@ -1,0 +1,85 @@
+<!-- Create User Form -->
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-user-plus"></i>
+                    Create New User
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/users">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               placeholder="Enter username" required>
+                        <div class="form-text">
+                            Username must be unique and contain only letters, numbers, and hyphens.
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/users" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Users
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Help Information -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-info-circle"></i>
+                    About Users
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Users can connect multiple devices (nodes) to the network
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Each user can have their own preauth keys for easy device registration
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Users are isolated from each other by default
+                    </li>
+                    <li class="mb-0">
+                        <i class="fas fa-check text-success me-2"></i>
+                        You can manage user permissions and access control through ACL policies
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+document.querySelector('form').addEventListener('submit', function(e) {
+    const name = document.getElementById('name').value.trim();
+    
+    if (name.length < 2) {
+        e.preventDefault();
+        alert('Username must be at least 2 characters long');
+        return false;
+    }
+    
+    if (!/^[a-zA-Z0-9-]+$/.test(name)) {
+        e.preventDefault();
+        alert('Username can only contain letters, numbers, and hyphens');
+        return false;
+    }
+});
+</script>
