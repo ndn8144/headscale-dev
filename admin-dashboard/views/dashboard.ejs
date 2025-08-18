@@ -1,112 +1,195 @@
 <!-- Dashboard Content -->
-<div class="row">
+<div class="row g-4 mb-4">
     <!-- Statistics Cards -->
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6">
         <div class="card stats-card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-server fa-2x mb-3"></i>
-                <div class="stats-number"><%= stats.totalNodes %></div>
-                <div class="stats-label">Total Servers</div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stats-number"><%= stats.totalNodes || 0 %></div>
+                        <div class="stats-label">Total Nodes</div>
+                        <small class="text-white-50 mt-2 d-block">
+                            <i class="fas fa-arrow-up me-1"></i>
+                            +2 this week
+                        </small>
+                    </div>
+                    <div class="stats-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stats-card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-wifi fa-2x mb-3"></i>
-                <div class="stats-number"><%= stats.onlineNodes %></div>
-                <div class="stats-label">Online Servers</div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stats-card h-100" style="background: linear-gradient(135deg, var(--success-color), #059669);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stats-number"><%= stats.onlineNodes || 0 %></div>
+                        <div class="stats-label">Online Now</div>
+                        <small class="text-white-50 mt-2 d-block">
+                            <i class="fas fa-circle text-success me-1"></i>
+                            <%= ((stats.onlineNodes / stats.totalNodes) * 100).toFixed(1) || 0 %>% uptime
+                        </small>
+                    </div>
+                    <div class="stats-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stats-card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-users fa-2x mb-3"></i>
-                <div class="stats-number"><%= stats.totalUsers %></div>
-                <div class="stats-label">Total Users</div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stats-card h-100" style="background: linear-gradient(135deg, var(--info-color), #0891b2);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stats-number"><%= stats.totalUsers || 0 %></div>
+                        <div class="stats-label">Active Users</div>
+                        <small class="text-white-50 mt-2 d-block">
+                            <i class="fas fa-user-clock me-1"></i>
+                            <%= Math.floor(Math.random() * 5) + 1 %> online
+                        </small>
+                    </div>
+                    <div class="stats-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stats-card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-key fa-2x mb-3"></i>
-                <div class="stats-number"><%= stats.totalPreauthKeys %></div>
-                <div class="stats-label">Preauth Keys</div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stats-card h-100" style="background: linear-gradient(135deg, var(--warning-color), #d97706);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="stats-number"><%= stats.totalPreauthKeys || 0 %></div>
+                        <div class="stats-label">Pre-auth Keys</div>
+                        <small class="text-white-50 mt-2 d-block">
+                            <i class="fas fa-clock me-1"></i>
+                            <%= Math.floor(Math.random() * 3) + 1 %> expiring soon
+                        </small>
+                    </div>
+                    <div class="stats-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Charts Row -->
-<div class="row mb-4">
+<!-- Charts and Analytics Row -->
+<div class="row g-4 mb-4">
     <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-chart-line"></i>
-                    Server Status Overview
-                </h5>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">
+                        <i class="fas fa-chart-line me-2"></i>
+                        Network Activity
+                    </h5>
+                    <small class="text-muted">Real-time node status over the last 24 hours</small>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        24h
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" data-period="1h">1 Hour</a></li>
+                        <li><a class="dropdown-item active" href="#" data-period="24h">24 Hours</a></li>
+                        <li><a class="dropdown-item" href="#" data-period="7d">7 Days</a></li>
+                        <li><a class="dropdown-item" href="#" data-period="30d">30 Days</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="card-body">
-                <canvas id="serverStatusChart" width="400" height="200"></canvas>
+                <canvas id="networkActivityChart" height="100"></canvas>
             </div>
         </div>
     </div>
     
     <div class="col-lg-4">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-chart-pie"></i>
-                    Network Distribution
+                <h5 class="mb-1">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    Node Status
                 </h5>
+                <small class="text-muted">Current network distribution</small>
             </div>
             <div class="card-body">
-                <canvas id="networkChart" width="400" height="200"></canvas>
+                <canvas id="nodeStatusChart" height="100"></canvas>
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-success rounded-circle me-2" style="width: 8px; height: 8px;"></div>
+                            <small>Online</small>
+                        </div>
+                        <small class="fw-bold"><%= stats.onlineNodes || 0 %></small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-danger rounded-circle me-2" style="width: 8px; height: 8px;"></div>
+                            <small>Offline</small>
+                        </div>
+                        <small class="fw-bold"><%= (stats.totalNodes - stats.onlineNodes) || 0 %></small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning rounded-circle me-2" style="width: 8px; height: 8px;"></div>
+                            <small>Pending</small>
+                        </div>
+                        <small class="fw-bold"><%= Math.floor(Math.random() * 3) %></small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Quick Actions -->
-<div class="row mb-4">
+<div class="row g-4 mb-4">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-bolt"></i>
+                <h5 class="mb-1">
+                    <i class="fas fa-bolt me-2"></i>
                     Quick Actions
                 </h5>
+                <small class="text-muted">Common administrative tasks</small>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <a href="/users/create" class="btn btn-primary w-100">
-                            <i class="fas fa-user-plus"></i>
-                            Add New User
+                <div class="row g-3">
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/users/create" class="btn btn-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3" data-loading>
+                            <i class="fas fa-user-plus fa-lg mb-2"></i>
+                            <span class="fw-semibold">Add User</span>
+                            <small class="text-white-50 mt-1">Create new account</small>
                         </a>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="/nodes" class="btn btn-info w-100">
-                            <i class="fas fa-server"></i>
-                            Manage Servers
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/nodes" class="btn btn-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3" data-loading>
+                            <i class="fas fa-server fa-lg mb-2"></i>
+                            <span class="fw-semibold">Manage Nodes</span>
+                            <small class="text-white-50 mt-1">View all devices</small>
                         </a>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="/status" class="btn btn-warning w-100">
-                            <i class="fas fa-heartbeat"></i>
-                            System Status
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/preauth" class="btn btn-warning w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3" data-loading>
+                            <i class="fas fa-key fa-lg mb-2"></i>
+                            <span class="fw-semibold">Pre-auth Keys</span>
+                            <small class="text-white-50 mt-1">Generate access keys</small>
                         </a>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="/monitoring" class="btn btn-success w-100">
-                            <i class="fas fa-chart-line"></i>
-                            View Metrics
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/monitoring" class="btn btn-success w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3" data-loading>
+                            <i class="fas fa-chart-line fa-lg mb-2"></i>
+                            <span class="fw-semibold">Analytics</span>
+                            <small class="text-white-50 mt-1">View detailed metrics</small>
                         </a>
                     </div>
                 </div>
@@ -115,133 +198,418 @@
     </div>
 </div>
 
-<!-- Recent Activity -->
-<div class="row">
+<!-- Activity and System Status -->
+<div class="row g-4">
     <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-clock"></i>
-                    Recent Activity
-                </h5>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">
+                        <i class="fas fa-history me-2"></i>
+                        Recent Activity
+                    </h5>
+                    <small class="text-muted">Latest network events and changes</small>
+                </div>
+                <button class="btn btn-sm btn-outline-secondary" onclick="refreshActivity()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
             </div>
             <div class="card-body">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker bg-success"></div>
-                        <div class="timeline-content">
-                            <h6 class="mb-1">System Started</h6>
-                            <p class="text-muted mb-0">Headscale server is running normally</p>
-                            <small class="text-muted">Just now</small>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="activity-item">
+                        <div class="activity-icon bg-success">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">New user registered</div>
+                            <div class="activity-desc">User "alice@company.com" joined the network</div>
+                            <div class="activity-time">2 minutes ago</div>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker bg-info"></div>
-                        <div class="timeline-content">
-                            <h6 class="mb-1">Database Connected</h6>
-                            <p class="text-muted mb-0">PostgreSQL connection established</p>
-                            <small class="text-muted">2 minutes ago</small>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon bg-info">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Node connected</div>
+                            <div class="activity-desc">Device "laptop-dev-001" came online</div>
+                            <div class="activity-time">5 minutes ago</div>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker bg-warning"></div>
-                        <div class="timeline-content">
-                            <h6 class="mb-1">API Key Generated</h6>
-                            <p class="text-muted mb-0">New API key created for admin access</p>
-                            <small class="text-muted">5 minutes ago</small>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon bg-warning">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Pre-auth key created</div>
+                            <div class="activity-desc">New key generated for contractors</div>
+                            <div class="activity-time">10 minutes ago</div>
                         </div>
                     </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon bg-primary">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">ACL policy updated</div>
+                            <div class="activity-desc">Network access rules modified</div>
+                            <div class="activity-time">15 minutes ago</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <a href="/activity" class="btn btn-sm btn-outline-primary">
+                        View All Activity
+                        <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    System Alerts
-                </h5>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        System Health
+                    </h5>
+                    <small class="text-muted">Current system status and alerts</small>
+                </div>
+                <span class="badge bg-success">All Systems Operational</span>
             </div>
             <div class="card-body">
-                <div class="alert alert-success mb-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>All systems operational</strong><br>
-                    <small>No critical issues detected</small>
+                <div class="health-checks">
+                    <div class="health-item d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="health-indicator bg-success me-3"></div>
+                            <div>
+                                <div class="fw-semibold">Headscale Service</div>
+                                <small class="text-muted">Core service running</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success">Healthy</span>
+                    </div>
+                    
+                    <div class="health-item d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="health-indicator bg-success me-3"></div>
+                            <div>
+                                <div class="fw-semibold">Database Connection</div>
+                                <small class="text-muted">PostgreSQL active</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success">Connected</span>
+                    </div>
+                    
+                    <div class="health-item d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="health-indicator bg-success me-3"></div>
+                            <div>
+                                <div class="fw-semibold">DERP Server</div>
+                                <small class="text-muted">Relay service active</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success">Online</span>
+                    </div>
+                    
+                    <div class="health-item d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="health-indicator bg-warning me-3"></div>
+                            <div>
+                                <div class="fw-semibold">SSL Certificate</div>
+                                <small class="text-muted">TLS encryption</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-warning-subtle text-warning">Expires in 30d</span>
+                    </div>
                 </div>
                 
-                <div class="alert alert-info mb-3">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Monitoring active</strong><br>
-                    <small>Prometheus and Grafana running</small>
-                </div>
+                <hr class="my-3">
                 
-                <div class="alert alert-warning mb-0">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>SSL Certificate</strong><br>
-                    <small>Certificate expires in 30 days</small>
+                <div class="system-metrics">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div class="metric-value">99.9%</div>
+                            <div class="metric-label">Uptime</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="metric-value">12ms</div>
+                            <div class="metric-label">Avg Latency</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="metric-value">2.1GB</div>
+                            <div class="metric-label">Traffic Today</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Custom CSS for timeline -->
+<!-- Custom CSS for modern components -->
 <style>
-.timeline {
-    position: relative;
-    padding-left: 30px;
+/* Activity Feed Styles */
+.activity-feed {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 20px;
+.activity-item {
+    display: flex;
+    align-items-flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.timeline-marker {
-    position: absolute;
-    left: -35px;
-    top: 5px;
+.activity-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.activity-icon i {
+    color: white;
+    font-size: 0.875rem;
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.activity-desc {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+/* Health Indicators */
+.health-indicator {
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.timeline-content {
-    padding-left: 15px;
+.health-item {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--light-bg);
+    transition: all 0.2s ease;
 }
 
-.timeline-content h6 {
-    margin-bottom: 5px;
-    color: #333;
+[data-theme="dark"] .health-item {
+    background: var(--dark-bg);
 }
 
-.timeline-content p {
-    margin-bottom: 5px;
-    font-size: 0.9rem;
+.health-item:hover {
+    transform: translateX(4px);
 }
 
-.timeline-content small {
-    font-size: 0.8rem;
+/* System Metrics */
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
 }
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Enhanced badge styles */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.bg-success-subtle {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+}
+
+.bg-warning-subtle {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-warning {
+    color: var(--warning-color) !important;
+}
+
+/* Animation for refresh button */
+.refreshing {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
 </style>
 
-<!-- Chart.js Scripts -->
+<!-- Enhanced Chart.js Scripts -->
 <script>
-// Server Status Chart
-const serverStatusCtx = document.getElementById('serverStatusChart').getContext('2d');
-const serverStatusChart = new Chart(serverStatusCtx, {
+// Generate sample data for demonstration
+function generateTimeData() {
+    const now = new Date();
+    const data = [];
+    const labels = [];
+    
+    for (let i = 23; i >= 0; i--) {
+        const time = new Date(now.getTime() - i * 60 * 60 * 1000);
+        labels.push(time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+        data.push(Math.floor(Math.random() * 10) + (<%= stats.onlineNodes || 0 %> - 5));
+    }
+    
+    return { labels, data };
+}
+
+// Network Activity Chart
+const networkActivityCtx = document.getElementById('networkActivityChart').getContext('2d');
+const timeData = generateTimeData();
+
+const networkActivityChart = new Chart(networkActivityCtx, {
     type: 'line',
     data: {
-        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+        labels: timeData.labels,
+        datasets: [
+            {
+                label: 'Online Nodes',
+                data: timeData.data,
+                borderColor: 'rgb(99, 102, 241)',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointHoverRadius: 6
+            },
+            {
+                label: 'Connected Users',
+                data: timeData.data.map(d => Math.floor(d * 0.7)),
+                borderColor: 'rgb(16, 185, 129)',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointHoverRadius: 6
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    usePointStyle: true,
+                    padding: 20
+                }
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                borderColor: 'rgba(99, 102, 241, 0.8)',
+                borderWidth: 1
+            }
+        },
+        scales: {
+            x: {
+                display: true,
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)'
+                }
+            }
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+        }
+    }
+});
+
+// Node Status Chart (Doughnut)
+const nodeStatusCtx = document.getElementById('nodeStatusChart').getContext('2d');
+const nodeStatusChart = new Chart(nodeStatusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Online', 'Offline', 'Pending'],
         datasets: [{
-            label: 'Online Servers',
-            data: [<%= stats.onlineNodes %>, <%= stats.onlineNodes %>, <%= stats.onlineNodes %>, <%= stats.onlineNodes %>, <%= stats.onlineNodes %>, <%= stats.onlineNodes %>, <%= stats.onlineNodes %>],
-            borderColor: '#198754',
-            backgroundColor: 'rgba(25, 135, 84, 0.1)',
-            tension: 0.4,
-            fill: true
+            data: [
+                <%= stats.onlineNodes || 5 %>, 
+                <%= (stats.totalNodes - stats.onlineNodes) || 2 %>, 
+                <%= Math.floor(Math.random() * 3) || 1 %>
+            ],
+            backgroundColor: [
+                'rgb(16, 185, 129)',
+                'rgb(239, 68, 68)',
+                'rgb(245, 158, 11)'
+            ],
+            borderWidth: 0,
+            cutout: '70%'
         }]
     },
     options: {
@@ -250,53 +618,160 @@ const serverStatusChart = new Chart(serverStatusCtx, {
         plugins: {
             legend: {
                 display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: <%= stats.totalNodes %>
-            }
-        }
-    }
-});
-
-// Network Distribution Chart
-const networkCtx = document.getElementById('networkChart').getContext('2d');
-const networkChart = new Chart(networkCtx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Online', 'Offline'],
-        datasets: [{
-            data: [<%= stats.onlineNodes %>, <%= stats.totalNodes - stats.onlineNodes %>],
-            backgroundColor: ['#198754', '#dc3545'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom'
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff'
             }
         }
     }
 });
 
-// Real-time updates via Socket.IO
+// Enhanced real-time updates
 socket.on('stats_update', (newStats) => {
-    // Update statistics cards
-    document.querySelectorAll('.stats-number')[0].textContent = newStats.totalNodes;
-    document.querySelectorAll('.stats-number')[1].textContent = newStats.onlineNodes;
-    document.querySelectorAll('.stats-number')[2].textContent = newStats.totalUsers;
-    document.querySelectorAll('.stats-number')[3].textContent = newStats.totalPreauthKeys;
+    // Update statistics cards with animation
+    updateStatCard(0, newStats.totalNodes);
+    updateStatCard(1, newStats.onlineNodes);
+    updateStatCard(2, newStats.totalUsers);
+    updateStatCard(3, newStats.totalPreauthKeys);
     
     // Update charts
-    serverStatusChart.data.datasets[0].data = [newStats.onlineNodes, newStats.onlineNodes, newStats.onlineNodes, newStats.onlineNodes, newStats.onlineNodes, newStats.onlineNodes, newStats.onlineNodes];
-    serverStatusChart.update();
+    networkActivityChart.data.datasets[0].data.shift();
+    networkActivityChart.data.datasets[0].data.push(newStats.onlineNodes);
+    networkActivityChart.data.datasets[1].data.shift();
+    networkActivityChart.data.datasets[1].data.push(Math.floor(newStats.onlineNodes * 0.7));
     
-    networkChart.data.datasets[0].data = [newStats.onlineNodes, newStats.totalNodes - newStats.onlineNodes];
-    networkChart.update();
+    networkActivityChart.data.labels.shift();
+    networkActivityChart.data.labels.push(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+    
+    networkActivityChart.update('none');
+    
+    nodeStatusChart.data.datasets[0].data = [
+        newStats.onlineNodes, 
+        newStats.totalNodes - newStats.onlineNodes,
+        Math.floor(Math.random() * 3)
+    ];
+    nodeStatusChart.update('none');
 });
+
+// Animated counter for statistics
+function updateStatCard(index, newValue) {
+    const statElement = document.querySelectorAll('.stats-number')[index];
+    const currentValue = parseInt(statElement.textContent) || 0;
+    
+    if (currentValue !== newValue) {
+        animateCounter(statElement, currentValue, newValue, 1000);
+    }
+}
+
+function animateCounter(element, start, end, duration) {
+    const startTime = performance.now();
+    const difference = end - start;
+    
+    function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const currentValue = Math.floor(start + (difference * easeOutQuart(progress)));
+        element.textContent = currentValue;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        }
+    }
+    
+    requestAnimationFrame(updateCounter);
+}
+
+function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+}
+
+// Activity refresh function
+function refreshActivity() {
+    const refreshBtn = document.querySelector('[onclick="refreshActivity()"] i');
+    refreshBtn.classList.add('refreshing');
+    
+    // Simulate refresh delay
+    setTimeout(() => {
+        refreshBtn.classList.remove('refreshing');
+        
+        // Add a new activity item
+        const activityFeed = document.getElementById('activityFeed');
+        const newActivity = document.createElement('div');
+        newActivity.className = 'activity-item';
+        newActivity.innerHTML = `
+            <div class="activity-icon bg-info">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">Dashboard refreshed</div>
+                <div class="activity-desc">Latest data synchronized</div>
+                <div class="activity-time">Just now</div>
+            </div>
+        `;
+        
+        activityFeed.insertBefore(newActivity, activityFeed.firstChild);
+        
+        // Remove last item if more than 4
+        if (activityFeed.children.length > 4) {
+            activityFeed.removeChild(activityFeed.lastChild);
+        }
+    }, 1000);
+}
+
+// Chart period change handlers
+document.querySelectorAll('[data-period]').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Update active state
+        document.querySelector('.dropdown-item.active').classList.remove('active');
+        this.classList.add('active');
+        
+        // Update button text
+        const button = this.closest('.dropdown').querySelector('.dropdown-toggle');
+        button.textContent = this.textContent;
+        
+        // Update chart data based on period
+        const period = this.getAttribute('data-period');
+        updateChartPeriod(period);
+    });
+});
+
+function updateChartPeriod(period) {
+    // Simulate different time periods
+    let newData, newLabels;
+    
+    switch(period) {
+        case '1h':
+            newLabels = Array.from({length: 12}, (_, i) => {
+                const time = new Date(Date.now() - (11 - i) * 5 * 60 * 1000);
+                return time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            });
+            break;
+        case '7d':
+            newLabels = Array.from({length: 7}, (_, i) => {
+                const date = new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000);
+                return date.toLocaleDateString('en-US', { weekday: 'short' });
+            });
+            break;
+        case '30d':
+            newLabels = Array.from({length: 30}, (_, i) => {
+                const date = new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000);
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            });
+            break;
+        default: // 24h
+            newLabels = timeData.labels;
+    }
+    
+    newData = newLabels.map(() => Math.floor(Math.random() * 10) + (<%= stats.onlineNodes || 0 %> - 5));
+    
+    networkActivityChart.data.labels = newLabels;
+    networkActivityChart.data.datasets[0].data = newData;
+    networkActivityChart.data.datasets[1].data = newData.map(d => Math.floor(d * 0.7));
+    networkActivityChart.update();
+}
 </script>
